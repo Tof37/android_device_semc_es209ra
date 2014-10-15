@@ -76,7 +76,7 @@ PRODUCT_COPY_FILES += \
 	device/semc/es209ra/recovery/init.rc:root/init.rc \
     device/semc/es209ra/prebuilt/initlogo.rle:root/initlogo.rle
 
-#WIFI modules and configs
+# WIFI modules and configs
 PRODUCT_COPY_FILES += \
     device/semc/es209ra/config/10dnsconf:system/etc/init.d/10dnsconf \
     device/semc/es209ra/config/10regcode:system/etc/init.d/10regcode \
@@ -86,10 +86,10 @@ PRODUCT_COPY_FILES += \
 #\
 #    device/semc/es209ra/prebuilt/ar6000.ko:system/lib/modules/ar6000.ko
 
-#recovery resources
+# recovery resources
 PRODUCT_COPY_FILES += \
     bootable/recovery/res/images/icon_firmware_error.png:root/res/images/icon_firmware_error.png \
-	bootable/recovery/res/images/icon_cid.png:root/res/images/icon_cid.png \
+    bootable/recovery/res/images/icon_cid.png:root/res/images/icon_cid.png \
     bootable/recovery/res/images/icon_firmware_install.png:root/res/images/icon_firmware_install.png \
     bootable/recovery/res/images/icon_clockwork.png:root/res/images/icon_clockwork.png \
     bootable/recovery/res/images/icon_error.png:root/res/images/icon_error.png \
@@ -111,7 +111,7 @@ PRODUCT_COPY_FILES += \
     bootable/recovery/res/images/progress_fill.png:root/res/images/progress_fill.png \
     bootable/recovery/res/images/stitch.png:root/res/images/stitch.png
 
-#Framework permissions
+# Framework permissions
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
     frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
@@ -125,7 +125,15 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml
 
--include device/semc/es209ra/prebuilt/chargeanimation.mk
+# Offline charging animation
+PRODUCT_COPY_FILES += \
+     device/semc/es209ra/animations/charging_animation_01.png:system/semc/chargemon/data/charging_animation_01.png \
+     device/semc/es209ra/animations/charging_animation_02.png:system/semc/chargemon/data/charging_animation_02.png \
+     device/semc/es209ra/animations/charging_animation_03.png:system/semc/chargemon/data/charging_animation_03.png \
+     device/semc/es209ra/animations/charging_animation_04.png:system/semc/chargemon/data/charging_animation_04.png \
+     device/semc/es209ra/animations/charging_animation_05.png:system/semc/chargemon/data/charging_animation_05.png \
+     device/semc/es209ra/animations/charging_animation_06.png:system/semc/chargemon/data/charging_animation_06.png \
+     device/semc/es209ra/animations/charging_animation_07.png:system/semc/chargemon/data/charging_animation_07.png
 
 PRODUCT_PROPERTY_OVERRIDES += \
     rild.libpath=/system/lib/libril-qc-1.so \
