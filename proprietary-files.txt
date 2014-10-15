@@ -3,7 +3,52 @@ usr/idc/es209ra_touch.idc
 usr/keylayout/es209ra_keypad.kl
 usr/keylayout/es209ra_handset.kl
 
-## RIL related stuff
+# Adreno 200
+etc/firmware/yamato_pfp.fw
+etc/firmware/yamato_pm4.fw
+
+# Adreno 200 files
+lib/egl/egl.cfg
+lib/egl/eglsubAndroid.so
+lib/egl/libEGL_adreno200.so
+lib/egl/libGLESv2_adreno200.so
+lib/egl/libq3dtools_adreno200.so
+lib/egl/libGLESv1_CM_adreno200.so
+lib/egl/libGLESv2S3D_adreno200.so
+lib/libgsl.so
+lib/libC2D2.so
+lib/libOpenVG.so
+lib/libsc-a2xx.so
+lib/libc2d2_z180.so
+
+# Camera FW
+etc/firmware/camfirm.bin
+
+# Camera proprietaries
+lib/liboemcamera.so
+lib/libmmjpeg.so
+lib/libmmipl.so
+
+# WIFI
+lib/modules/data.patch.hw2_0.bin
+lib/modules/athwlan.bin.z77
+bin/wlan_mac
+bin/wlan_tool
+
+# BT proprietary
+bin/hci_qcomm_init
+
+# Sensor and AKMD Binary
+lib/hw/sensors.es209ra.so
+etc/sensors.conf
+bin/akmd2
+
+# Offline charging
+bin/updatemiscta
+lib/libmiscta.so
+bin/chargemon
+
+# RIL
 lib/libril.so
 bin/port-bridge
 bin/qmuxd
@@ -27,50 +72,31 @@ lib/libril-qc-1.so
 lib/libwms.so
 lib/libwmsts.so
 
-## Camera proprietaries
-lib/liboemcamera.so
-lib/libmmjpeg.so
-lib/libmmipl.so
-
-## FIRMWARE
-etc/firmware/yamato_pfp.fw
-etc/firmware/yamato_pm4.fw
-etc/firmware/camfirm.bin
-
-## ATHEROS WIFI
-lib/modules/athwlan.bin.z77
-lib/modules/data.patch.hw2_0.bin
-bin/wlan_mac
-bin/wlan_tool
-
-## BT proprietary
-bin/hci_qcomm_init
-
-## Adreno 200 files
-lib/libgsl.so
-lib/libsc-a2xx.so
-lib/egl/eglsubAndroid.so
-lib/egl/libGLESv1_CM_adreno200.so
-lib/egl/libq3dtools_adreno200.so
-lib/egl/libEGL_adreno200.so
-lib/egl/libGLESv2_adreno200.so
-lib/egl/egl.cfg
-lib/egl/libGLESv2S3D_adreno200.so
-lib/libC2D2.so
-lib/libOpenVG.so
-lib/libc2d2_z180.so
-
-
-## Other libraries and proprietary binaries
-lib/hw/sensors.es209ra.so
-etc/sensors.conf
-bin/akmd2
-
-#offline charger
-bin/chargemon
-bin/updatemiscta
-lib/libmiscta.so
-
-#OMX
-lib/libOmxEvrcDec.so
-lib/libOmxQcelp13Dec.so
+# OMX
+libiwiOmx.so
+libOmxCore.so
+libOmxVdec.so
+libOmxVenc.so
+libOmxAacEnc.so
+libOmxAmrEnc.so
+libOmxVidEnc.so
+libqcomm_omx.so
+libiwiOmxUtil.so
+libmm-omxcore.so
+libmmstillomx.so
+libOmxEvrcDec.so
+libOmxEvrcEnc.so
+libEffectOmxCore.so
+libOmxQcelp13Dec.so
+libOmxQcelp13Enc.so
+libimage-omx-common.so
+libomx_sharedlibrary.so
+libimage-jpeg-enc-omx-comp.so
+libomx_aacdec_sharedlibrary.so
+libomx_amrdec_sharedlibrary.so
+libomx_amrenc_sharedlibrary.so
+libomx_avcdec_sharedlibrary.so
+libomx_m4vdec_sharedlibrary.so
+libomx_mp3dec_sharedlibrary.so
+libomx_wmadec_sharedlibrary.so
+libomx_wmvdec_sharedlibrary.so
