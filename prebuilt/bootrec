@@ -13,7 +13,7 @@ then
   echo "mass_storage,adb" > /sys/class/android_usb/android0/functions
   echo 1 > /sys/class/android_usb/android0/enable
 	echo 0 > /sys/module/msm_fb/parameters/align_buffer
-  #stop adbd
+  stop adbd
 
   rm /cache/recovery/boot
   mount -o remount,rw rootfs /
