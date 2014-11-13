@@ -112,24 +112,28 @@ BOARD_USES_LEGACY_RIL := true
 # Kernel
 TARGET_KERNEL_SOURCE := kernel/semc/es209ra
 TARGET_KERNEL_CONFIG := sde_es209ra_defconfig
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.4.3
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := es209ra
 TARGET_KERNEL_LOADER := $(PREBUILT_FOLDER)/loader.sin
 TARGET_KERNEL_MANIFEST := $(PREBUILT_FOLDER)/manifest.mf
 BOARD_KERNEL_CMDLINE := console=null
 BOARD_KERNEL_BASE := 0x20000000
 TARGET_BOOTLOADER_BOARD_NAME := es209ra
+TARGET_RELEASETOOLS_EXTENSIONS := device/semc/es209ra
 
 #Recovery
+SKIP_SET_METADATA := true
+TARGET_NO_SEPARATE_RECOVERY := true
+#BOARD_USES_RECOVERY_CHARGEMODE := false
 BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_USES_RECOVERY_CHARGEMODE := false
 BOARD_CUSTOM_BOOTIMG_MK := device/semc/es209ra/custombootimg.mk
-TARGET_RECOVERY_PRE_COMMAND := "touch /cache/recovery/boot;sync;"
+TARGET_RECOVERY_PRE_COMMAND := "/sbin/pre-recovery.sh"
+TARGET_RECOVERY_FSTAB := device/semc/es209ra/rootdir/recovery.fstab
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/semc/es209ra/recovery/recovery_keys.c
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
 BOARD_SDCARD_INTERNAL_DEVICE := /dev/block/mmcblk0p1
-TARGET_RECOVERY_FSTAB := device/semc/es209ra/recovery/recovery.fstab
-RECOVERY_FSTAB_VERSION := 2
+TARGET_RECOVERY_DEVICE_DIRS += device/semc/es209ra
 
 # We don't build bootloader and radio
 TARGET_NO_BOOTLOADER := true
@@ -139,7 +143,8 @@ TARGET_NO_RADIOIMAGE := true
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
-# A custom ota package maker for a device without a boot partition
-TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/semc/es209ra/releasetools/semc_ota_from_target_files
+# CM Hardware tunables
+BOARD_HARDWARE_CLASS += device/semc/es209ra/cmhw
 
+# Assert
 TARGET_OTA_ASSERT_DEVICE := X10i,X10a,es209ra,X10

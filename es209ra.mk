@@ -7,7 +7,7 @@ $(call inherit-product, device/common/gps/gps_eu_supl.mk)
 
 $(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
-PRODUCT_AAPT_CONFIG := normal hdpi hdpi
+PRODUCT_AAPT_CONFIG := normal hdpi
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 PRODUCT_PACKAGES += \
@@ -63,17 +63,15 @@ PRODUCT_COPY_FILES += \
 
 # Init files
 PRODUCT_COPY_FILES += \
-    device/semc/es209ra/prebuilt/init.es209ra.rc:root/init.es209ra.rc \
+    device/semc/es209ra/rootdir/init.es209ra.rc:root/init.es209ra.rc \
+    device/semc/es209ra/rootdir/ueventd.es209ra.rc:root/ueventd.es209ra.rc \
+    device/semc/es209ra/rootdir/fstab.es209ra:root/fstab.es209ra \
+    device/semc/es209ra/rootdir/recovery.fstab:root/recovery.fstab \
+    device/semc/es209ra/rootdir/sbin/pre-recovery.sh:root/sbin/pre-recovery.sh \
     device/semc/es209ra/prebuilt/init.es209ra.usb.rc:root/init.es209ra.usb.rc \
     device/semc/es209ra/prebuilt/init.bt.sh:system/etc/init.bt.sh \
     device/semc/es209ra/prebuilt/DualMicControl.txt:system/etc/DualMicControl.txt \
-    device/semc/es209ra/prebuilt/ueventd.es209ra.rc:root/ueventd.es209ra.rc \
     device/semc/es209ra/prebuilt/hw_config.sh:system/etc/hw_config.sh \
-    device/semc/es209ra/recovery/recovery.fstab:root/recovery.fstab \
-	device/semc/es209ra/prebuilt/fstab.es209ra:root/fstab.es209ra \
-	device/semc/es209ra/prebuilt/bootrec:root/sbin/bootrec \
-	device/semc/es209ra/prebuilt/bootrec-device:root/sbin/bootrec-device \
-	device/semc/es209ra/recovery/init.rc:root/init.rc \
     device/semc/es209ra/prebuilt/initlogo.rle:root/initlogo.rle
 
 # WIFI modules and configs
@@ -125,27 +123,41 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.com.google.locationfeatures=1 \
     ro.telephony.ril.v3=signalstrength,datacall,skipbrokendatacall,icccardstatus,1 \
     dalvik.vm.dexopt-flags=m=y \
-    dalvik.vm.dexopt-data-only=1 \
     dalvik.vm.lockprof.threshold=500 \
     dalvik.vm.execution-mode=int:jit \
     dalvik.vm.checkjni=false \
+    ro.vold.umsdirtyratio=20 \
     ro.opengles.version=131072  \
     ro.compcache.default=0 \
     ro.product.locale.language=en \
     ro.product.locale.region=US \
     persist.ro.ril.sms_sync_sending=1 \
     ro.camera.hd_shrink_vf_enabled=1 \
-    hwui.render_dirty_regions=false \
-    hwui.disable_vsync=true \
-    debug.composition.type=mdp \
+    debug.composition.type=gpu \
     debug.sf.hw=1 \
     persist.sys.usb.config=mass_storage,adb \
     persist.service.adb.enable=1 \
     sys.usb.config=mass_storage,adb 
 
+# tell Android that its a low ram device
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.config.low_ram=true
 
+# device specific UI spped optimisation defines 
+PRODUCT_PROPERTY_OVERRIDES += \
+    debug.qctwa.statusbar=1 \
+    com.qc.hardware=true \
+    persist.sys.ui.hw=1 \
+    debug.hwui.render_dirty_regions=false
+
+# Tethering
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.tethering.kb_disconnect=1
+
+# Disable strict mode
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.strictmode.visual=0 \
+    persist.sys.strictmode.disable=1
 
 # es209ra uses high-density artwork where available
 PRODUCT_LOCALES += hdpi

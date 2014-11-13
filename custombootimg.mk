@@ -14,18 +14,28 @@
 
 LOCAL_PATH := $(call my-dir)
 
+uncompressed_ramdisk := $(PRODUCT_OUT)/ramdisk.cpio
+$(uncompressed_ramdisk): $(INSTALLED_RAMDISK_TARGET)
+	zcat $< > $@
+
+INITSH := device/semc/es209ra/combinedroot/init.sh
+
 INSTALLED_BOOTIMAGE_TARGET := $(PRODUCT_OUT)/boot.img
-$(INSTALLED_BOOTIMAGE_TARGET): $(TARGET_PREBUILT_KERNEL) $(recovery_ramdisk) $(INSTALLED_RAMDISK_TARGET) $(PRODUCT_OUT)/utilities/flash_image $(PRODUCT_OUT)/utilities/busybox $(PRODUCT_OUT)/utilities/erase_image $(MKBOOTIMG) $(MINIGZIP) $(INTERNAL_BOOTIMAGE_FILES)
+$(INSTALLED_BOOTIMAGE_TARGET): $(PRODUCT_OUT)/kernel $(uncompressed_ramdisk) $(recovery_uncompressed_ramdisk) $(INSTALLED_RAMDISK_TARGET) $(INITSH) $(PRODUCT_OUT)/utilities/flash_image $(PRODUCT_OUT)/utilities/busybox $(PRODUCT_OUT)/utilities/erase_image $(MKBOOTIMG) $(MINIGZIP) $(INTERNAL_BOOTIMAGE_FILES)
 	$(call pretty,"Boot image: $@")
-	$(hide) mkdir -p $(PRODUCT_OUT)/combinedroot/
-	$(hide) device/semc/es209ra/releasetools/prepare_kernel $(TARGET_KERNEL_SOURCE)/arch/arm/configs/$(TARGET_KERNEL_CONFIG) $(PRODUCT_OUT) $(PREBUILT_FOLDER)
-	$(hide) rm -rf $(PRODUCT_OUT)/recovery/root/sbin/*
-	$(hide) cp -r $(LOCAL_PATH)/prebuilt/sbin/* $(PRODUCT_OUT)/recovery/root/sbin/	
-	$(hide) cp -r $(PRODUCT_OUT)/root/* $(PRODUCT_OUT)/combinedroot/
-	$(hide) cp -r $(PRODUCT_OUT)/recovery/root/sbin/* $(PRODUCT_OUT)/combinedroot/sbin/
-	$(hide) mkdir -p $(PRODUCT_OUT)/combinedroot/res
-	$(hide) cp -r $(PRODUCT_OUT)/recovery/root/res/* $(PRODUCT_OUT)/combinedroot/res/
-	$(hide) sed -i 's/ro.adb.secure=1//g' $(PRODUCT_OUT)/combinedroot/default.prop
+
+	$(hide) rm -fr $(PRODUCT_OUT)/combinedroot
+	$(hide) mkdir -p $(PRODUCT_OUT)/combinedroot/sbin
+
+	$(hide) mv $(PRODUCT_OUT)/root/initlogo.rle $(PRODUCT_OUT)/combinedroot/initlogo.rle
+	$(hide) cp $(uncompressed_ramdisk) $(PRODUCT_OUT)/combinedroot/sbin/
+	$(hide) cp $(recovery_uncompressed_ramdisk) $(PRODUCT_OUT)/combinedroot/sbin/
+	$(hide) cp $(PRODUCT_OUT)/utilities/busybox $(PRODUCT_OUT)/combinedroot/sbin/
+
+	$(hide) cp $(INITSH) $(PRODUCT_OUT)/combinedroot/sbin/init.sh
+	$(hide) chmod 755 $(PRODUCT_OUT)/combinedroot/sbin/init.sh
+	$(hide) ln -s sbin/init.sh $(PRODUCT_OUT)/combinedroot/init
+
 	$(hide) $(MKBOOTFS) $(PRODUCT_OUT)/combinedroot/ > $(PRODUCT_OUT)/combinedroot.cpio
 	$(hide) cat $(PRODUCT_OUT)/combinedroot.cpio | $(MINIGZIP) > $(PRODUCT_OUT)/combinedroot.fs
 	$(hide) $(MKBOOTIMG) --kernel $(PRODUCT_OUT)/kernel --ramdisk $(PRODUCT_OUT)/combinedroot.fs --base $(BOARD_KERNEL_BASE) --output $@

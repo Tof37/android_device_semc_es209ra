@@ -1,6 +1,4 @@
 # Prebuilt kl keymaps
-usr/idc/es209ra_touch.idc
-usr/keylayout/es209ra_keypad.kl
 usr/keylayout/es209ra_handset.kl
 
 # Adreno 200

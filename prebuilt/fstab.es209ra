@@ -1,5 +1,0 @@
-#<label>                                       <mnt_point>            <type>          <mnt_flags and options>        <fs_mgr_flags>
-cache                                          /cache                 yaffs2          defaults                        defaults
-userdata                                       /data                  yaffs2          defaults                        defaults
-system                                         /system                yaffs2          defaults                        defaults
-/devices/platform/msm_sdcc.1/mmc_host/mmc0     auto            	      vfat            defaults             voldmanaged=sdcard0:1,noemulatedsd
